@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Petitons</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cyborg/bootstrap.min.css"/>
+<script src="https://unpkg.com/mithril/mithril.js"></script>
+</head>
+<body>
+    <h1>Bonjour</h1>
+    <script>
+        var createPetitionForm = {
+        view: function() {
+            return m("div",{style: "margin-top: 50px"}, [
+            m("h3", {class: "text text-center"}, "Creation d'une petition"), 
+            m("form",{
+                onsubmit: function(e) {
+		        e.preventDefault()
+		       Petition.save()
+		      }
+            }, [
+            m("div", {class: "row"}, [
+                m("div", {class: "col-6"}, [
+                      m("label.label",{class: "col-form-label"},"Titre de la petition"),
+                      m("input.input[placeholder=Titre]", {class: "form-control",
+                      oninput: function (e) {
+                       Petition.titre = e.target.value
+                    }
+                 }),
+                ]),
+                m("div", {class: "col-6"}, [
+                     m("label.label", {class: "col-form-label"},"Thème"),
+                     m("input.input[placeholder=Thème]", {class: "form-control",
+                     oninput: function (e) {
+                         Petition.theme = e.target.value
+                     }
+                    }), 
+                ]),
+            ]),    
+            m("label.label",{class: "col-form-label"}, "Description"),
+            m("textarea[placeholder=Description de la petition]", {class: "form-control",
+            oninput: function (e) {
+                Petition.Description = e.target.value
+            }
+            }),
+            m("button.button[type=submit]",{class: "btn btn-success", style: "margin-top: 10px"}, "Lancer"),
+        ])
+            ])
+           
+            }
+        }
+        var createPetitionView = {
+            view: function() {
+                 return m('div',{class: "container"}, [
+                       m('nav', {class: "navbar navbar-expand-lg navbar-dark bg-dark"}, [
+                       m('div', {class: "container-fluid"}, [
+                       m('a', {href: "#"}, "Projet"),
+                       m('div', {class: "collapse navbar-collapse", id: "navbarColor03"}, [
+                           m('ul', {class: "navbar-nav me-auto"}, [
+                               m('li', {class: "nav-item active"}, [
+                                   m('a', {href: "#!/hello", class: "nav-link"}, "Petitions")
+                               ]),
+                               m('li', {class: "nav-item "}, [
+                                   m('a', {href: "/lancer_petition.html", class: "nav-link"}, "Lancer une petition")
+                               ]),
+                               m('li', {class: "nav-item "}, [
+                                   m('a', {href: "#!/hello", class: "nav-link"}, "Mes petitions")
+                               ]),
+                               m('li', {class: "nav-item "}, [
+                                   m('a', {href: "#!/hello", class: "nav-link"}, "Connexion")
+                               ])
+                           ])
+                       ])    
+                       ])    
+                     ]),
+                     m(createPetitionForm)
+                ])
+            }
+        }
+        var Petition = {
+          titre: "",
+          Description: "",
+          theme: "",
+          save: function () {
+              const petition = {
+                  titre: this.titre,
+                  Description: this.Description,
+                  theme: this.theme
+              }
+              return m.request({
+	            method: "POST",
+	            url: "_ah/api/myApi/v1/savePetition/",
+	            body: petition,
+	        })
+	        .then(function(result) {
+	        	console.log(result);
+	        })
+          },
+          getPetition: function () {
+            console.log("clique")  
+            return m.request({
+	            method: "GET",
+	            url: "_ah/api/myApi/v1/getPetitions/"
+	        })
+	        .then(function(result) {  
+	          console.log(result)
+	        })
+          }
+        }
+        m.mount(document.body, createPetitionView)
+    </script>
+</body>
+</html>

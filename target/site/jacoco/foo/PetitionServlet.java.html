@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PetitionServlet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Petitions</a> &gt; <a href="index.source.html" class="el_package">foo</a> &gt; <span class="el_source">PetitionServlet.java</span></div><h1>PetitionServlet.java</h1><pre class="source lang-java linenums">package foo;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.KeyRange;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+
+@WebServlet(name = &quot;PetServlet&quot;, urlPatterns = { &quot;/petition&quot; })
+<span class="nc" id="L30">public class PetitionServlet extends HttpServlet {</span>
+
+	@Override
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+<span class="nc" id="L35">		response.setContentType(&quot;text/html&quot;);</span>
+<span class="nc" id="L36">		response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+
+<span class="nc" id="L38">		Random r = new Random();</span>
+<span class="nc" id="L39">		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();</span>
+
+		// Create users
+<span class="nc bnc" id="L42" title="All 2 branches missed.">		for (int i = 0; i &lt; 50; i++) {</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">			for (int j = 0; j &lt; 10; j++) {</span>
+<span class="nc" id="L44">				Entity e = new Entity(&quot;PU&quot;, &quot;P&quot; + i + &quot;_&quot; + &quot;U&quot;+j);</span>
+<span class="nc" id="L45">				e.setProperty(&quot;firstName&quot;, &quot;My name is&quot; + j);</span>
+<span class="nc" id="L46">				e.setProperty(&quot;body&quot;, &quot;Vote for my&quot;+i+&quot;,&quot;+j);</span>
+<span class="nc" id="L47">				datastore.put(e);</span>
+<span class="nc" id="L48">				response.getWriter().print(&quot;&lt;li&gt; created post:&quot; + e.getKey() + &quot;&lt;br&gt;&quot;);</span>
+			}
+		}
+<span class="nc" id="L51">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

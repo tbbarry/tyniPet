@@ -1,0 +1,11 @@
+<!-- Indices written at Wed, 22 Jun 2022 19:05:55 UTC -->
+
+<datastore-indexes autoGenerate="true">
+
+    <!-- Used 4 times in query history -->
+    <datastore-index kind="Petition" ancestor="false" source="auto">
+        <property name="nombreSignature" direction="desc"/>
+        <property name="created_at" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>
